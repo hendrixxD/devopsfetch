@@ -1,0 +1,11 @@
+[Unit]
+Description=DevOpsFetch Monitoring Service
+After=network.target
+
+[Service]
+ExecStart=/path/to/devopsfetch.sh -t "$(date -d '1 hour ago' +'%Y-%m-%d %H:%M:%S')" "$(date +'%Y-%m-%d %H:%M:%S')"
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
