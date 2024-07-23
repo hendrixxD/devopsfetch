@@ -72,17 +72,18 @@ Information Retrieval:
       ```
 
 ### Output Formatting
-- Ensure all outputs are formatted for readability, in well formatted tables with descriptive column names.
+- All outputs are formatted for readability, in well formatted tables with descriptive column names.
 
 ### Installation Script
-- Create a script to install necessary dependencies and set up a systemd service to monitor and log activities.
-- Implement continuous monitoring mode with logging to a file, ensuring log rotation and management.
+- An `install.sh` script is available with necessary dependencies and set up a systemd service to monitor and log activities.
+- Continuous monitoring mode is implemented with logging to a file, ensuring log rotation and management.
 Help and Documentation:
-- Implement a help flag -h or --help to provide usage instructions for the program.
-- Write clear and comprehensive documentation covering:
-  - Installation and configuration steps.
-  - Usage examples for each command-line flag.
-  - The logging mechanism and how to retrieve logs.
+- A help flag -h or --help guide is implemenetd to provide usage instructions for the program.
+- A clear and comprehensive documentation covering:
+   - Installation and configuration steps.
+   - Usage examples for each command-line flag.
+   - The logging mechanism and how to retrieve logs
+  is available in [Documentation](./Documentation)
 
 
 _Stage5 Devops MID INTERNSHIP TASK_
