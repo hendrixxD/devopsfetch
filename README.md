@@ -83,7 +83,7 @@ Help and Documentation:
    - Installation and configuration steps.
    - Usage examples for each command-line flag.
    - The logging mechanism and how to retrieve logs
-  is available in [Documentation](./Documentation)
+  is available in [Documentation](./Documentation.md)
 
 
 _Stage5 Devops MID INTERNSHIP TASK_
