@@ -3,8 +3,10 @@ Description=DevOpsFetch Monitoring Service
 After=network.target
 
 [Service]
-ExecStart=/path/to/devopsfetch.sh -t "$(date -d '1 hour ago' +'%Y-%m-%d %H:%M:%S')" "$(date +'%Y-%m-%d %H:%M:%S')"
-Restart=always
+# ExecStart=/usr/local/bin/devopsfetch -t "$(date -d '1 hour ago' +'%Y-%m-%d %H:%M:%S')" "$(date +'%Y-%m-%d %H:%M:%S')"
+ExecStart=/usr/local/bin/devopsfetch.sh --time "1 hour ago" "now"
+
+Restart=5s
 User=root
 
 [Install]
