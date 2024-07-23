@@ -65,28 +65,38 @@ show_nginx_info() {
 }
 
 # Function to display Nginx domain info
-show_nginx_domain_info() {
-    domain=$1
-    config=$(nginx -T 2>/dev/null | awk -v domain="$domain" '
-        /server {/,/}/ {
-            if ($0 ~ "server_name.*" domain) {
-                in_block = 1
-                print "Configuration for domain: " domain
-            }
-            if (in_block) {
-                print $0
-            }
-            if (in_block && $0 ~ /}/) {
-                in_block = 0
-                exit
-            }
-        }
-    ')
-    if [ -z "$config" ]; then
-        echo "No configuration found for domain: $domain"
-    else
-        echo "$config"
-    fi
+show_nginx_info() {
+    echo "+$(printf '%0.s-' {1..30})+$(printf '%0.s-' {1..25})+$(printf '%0.s-' {1..50})+"
+    printf "| %-28s | %-23s | %-48s |\n" "Server Domain" "Proxy" "Configuration File"
+    echo "+$(printf '%0.s-' {1..30})+$(printf '%0.s-' {1..25})+$(printf '%0.s-' {1..50})+"
+
+    nginx -T 2>/dev/null | awk '
+    function trim(s) {
+        sub(/^[ \t\r\n]+/, "", s)
+        sub(/[ \t\r\n]+$/, "", s)
+        return s
+    }
+    /server_name/ {
+        server_name = $0
+        gsub(/;/, "", server_name)
+        gsub(/server_name/, "", server_name)
+        server_name = trim(server_name)
+    }
+    /listen/ && !/default_server/ {
+        listen = $0
+        gsub(/;/, "", listen)
+        gsub(/listen/, "", listen)
+        listen = trim(listen)
+    }
+    /include/ && /sites-enabled/ {
+        config_file = $2
+        gsub(/;/, "", config_file)
+        config_file = trim(config_file)
+        printf "| %-28s | %-23s | %-48s |\n", server_name, "http://" listen, config_file
+    }
+    '
+
+    echo "+$(printf '%0.s-' {1..30})+$(printf '%0.s-' {1..25})+$(printf '%0.s-' {1..50})+"
 }
 
 # Function to display all users and their last login times
@@ -222,3 +232,34 @@ case "$1" in
         exit 1
         ;;
 esac
+
+
+show_nginx_info() {
+    echo "---------------------------------------------------------"
+    echo "| Server Domain | Proxy            | Configuration File |"
+    echo "---------------------------------------------------------"
+    nginx -T 2>/dev/null | awk '
+        /server_name/ {
+            server_name = $0
+            gsub(/;/, "", server_name)
+            gsub(/server_name/, "", server_name)
+        }
+        /listen/ && !/default_server/ {
+            listen = $0
+            gsub(/;/, "", listen)
+            gsub(/listen/, "", listen)
+        }
+        /location/ {
+            proxy = $0
+            gsub(/proxy_pass/, "", proxy)
+            gsub(/;/, "", proxy)
+        }
+        /include/ && /conf/ {
+            config_file = $0
+            gsub(/include/, "", config_file)
+            gsub(/;/, "", config_file)
+            print "| " server_name " | " listen " | " config_file " |"
+        }
+    ' | sort | uniq | sed 's/^ *//'
+    echo "----------------------------------------------"
+}
