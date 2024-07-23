@@ -114,7 +114,7 @@ If  at anypoint you encounter any issues, please check the following:
 2. Docker Information:
 - To list all Docker containers:
   ```
-  devopsfetch -d all
+  devopsfetch -d
   ```
 - To get info about a specific container:
   ```
