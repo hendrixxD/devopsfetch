@@ -7,7 +7,7 @@ DevOpsFetch is a bash-based system information retrieval and monitoring tool des
 1. Clone this repository
 
    ```ssh
-   git clone https://github.com/yourusername/devopsfetch.git
+   git clone https://github.com/hendrixxD/devopsfetch.git
    ```
    ```
    cd devopsfetch
