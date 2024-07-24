@@ -12,7 +12,7 @@ fi
 sudo apt update
 
 # Install necessary dependencies
-sudo apt install -y jq lsof net-tools nginx docker.io
+sudo apt install -y jq lsof net-tools nginx docker-ce
 
 # Create directory for DevOpsFetch
 mkdir -p /opt/devopsfetch
